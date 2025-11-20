@@ -1,0 +1,37 @@
+
+  function loadPayList(){
+    const payListEl=document.getElementById("pay-list");
+    const totalPayEl=document.getElementById("total-pay");
+    payListEl.innerHTML="Đang tải...";
+    let total=0;
+
+    db.collection("attendance").orderBy("date","desc").onSnapshot(attSnap=>{
+      payListEl.innerHTML=""; total=0;
+      attSnap.forEach(doc=>{
+        const d=doc.data();
+        if(d.email!==PHUC_EMAIL) return;
+        const hours=((new Date("2000/01/01 "+d.timeOut)-new Date("2000/01/01 "+d.timeIn))/3600000).toFixed(2);
+        const money=hours*14000;
+        if(!d.paid) total+=money;
+        const div=document.createElement("div");
+        div.className="pay-item"; if(d.paid) div.classList.add("paid");
+        div.innerHTML=`<input type="checkbox" class="pay-check" data-id="${doc.id}" data-type="att" ${d.paid?'disabled checked':''}>
+        <div style="flex:1"><strong>${d.date}</strong> → ${hours} giờ → <b>${money.toLocaleString()} đ</b></div>`;
+        payListEl.appendChild(div);
+      });
+
+      db.collection("extras").orderBy("timestamp","desc").onSnapshot(extraSnap=>{
+        extraSnap.forEach(doc=>{
+          const e=doc.data();
+          if(e.email!==PHUC_EMAIL) return;
+          if(!e.paid) total+=e.amount;
+          const div=document.createElement("div");
+          div.className="pay-item extra";
+          div.innerHTML=`<input type="checkbox" class="pay-check" data-id="${doc.id}" data-type="extra" ${e.paid?'disabled checked':''}>
+          <div style="flex:1">${e.type}: <b style="color:${e.amount<0?'red':'green'}">${e.amount.toLocaleString()} đ</b></div>`;
+          payListEl.appendChild(div);
+        });
+        totalPayEl.innerText=`Tổng phải trả: ${total.toLocaleString()} đ`;
+      });
+    });
+  }

@@ -3,64 +3,69 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Chấm công 3D - Phúc</title>
+  <title>Login – Chú gấu Animation</title>
   <link rel="stylesheet" href="style.css" />
-  <!-- Three.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.min.js"></script>
-  <!-- Firebase (compat - dễ dùng) -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
-  <!-- NAV / header -->
-  <header class="topbar">
-    <div class="brand">Chấm Công 3D — Phúc</div>
-    <div id="user-area">
-      <span id="user-email"></span>
-      <button id="btn-logout" class="btn hidden">Đăng xuất</button>
+
+<div class="login-container">
+
+  <!-- GẤU SVG -->
+  <div id="bear">
+    <svg width="260" viewBox="0 0 300 300">
+
+      <!-- Body -->
+      <g id="body">
+        <circle cx="150" cy="180" r="95" fill="#e6f3fa"/>
+      </g>
+
+      <!-- Head -->
+      <g id="head">
+        <circle cx="150" cy="120" r="80" fill="#e6f3fa"/>
+      </g>
+
+      <!-- Eyes -->
+      <g id="eyes">
+        <circle id="eye-left" cx="120" cy="110" r="10" fill="#000"/>
+        <circle id="eye-right" cx="180" cy="110" r="10" fill="#000"/>
+      </g>
+
+      <!-- Brows -->
+      <g id="brows" stroke="#000" stroke-width="12" stroke-linecap="round">
+        <line id="brow-left" x1="105" y1="90" x2="135" y2="90"/>
+        <line id="brow-right" x1="165" y1="90" x2="195" y2="90"/>
+      </g>
+
+      <!-- Mouth -->
+      <path id="mouth" d="M120 145 Q150 165 180 145" stroke="#000" stroke-width="8" fill="none" />
+
+      <!-- Hands -->
+      <g id="hands">
+        <ellipse id="hand-left" cx="95" cy="165" rx="25" ry="35" fill="#e6f3fa"/>
+        <ellipse id="hand-right" cx="205" cy="165" rx="25" ry="35" fill="#e6f3fa"/>
+      </g>
+
+    </svg>
+  </div>
+
+  <!-- FORM LOGIN -->
+  <div class="card">
+    <h2>Đăng nhập</h2>
+    <input id="email" type="email" placeholder="Email" />
+    <div class="password-wrapper">
+      <input id="password" type="password" placeholder="Mật khẩu" />
+      <span id="toggle-pass">👁</span>
     </div>
-  </header>
+    <button id="btn-login" class="btn">Đăng nhập</button>
+    <p id="auth-msg"></p>
+  </div>
 
-  <!-- MAIN LAYOUT -->
-  <main class="container">
-    <!-- Left: 3D canvas -->
-    <section class="left">
-      <div id="three-container"></div>
-    </section>
+</div>
 
-    <!-- Right: Auth + Chấm công -->
-    <section class="right">
-      <!-- Auth forms -->
-      <div id="auth-card" class="card">
-        <h2>Đăng nhập / Đăng ký</h2>
-        <input id="email" type="email" placeholder="Email" />
-        <input id="password" type="password" placeholder="Mật khẩu" />
-        <div class="row">
-          <button id="btn-login" class="btn">Đăng nhập</button>
-          <button id="btn-register" class="btn alt">Đăng ký</button>
-        </div>
-        <p id="auth-msg" class="muted"></p>
-      </div>
+<script src="bear.js"></script>
 
-      <!-- Attendance -->
-      <div id="attendance-card" class="card hidden">
-        <h2>Chấm công</h2>
-        <div class="time-now" id="time-now">--:--:--</div>
-        <div class="row">
-          <button id="btn-checkin" class="btn big">Check In</button>
-          <button id="btn-checkout" class="btn big alt">Check Out</button>
-        </div>
-        <h3>Lịch sử</h3>
-        <div id="history" class="history"></div>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer">© Chấm Công 3D — Demo</footer>
-
-  <!-- App JS -->
-  <script src="app.js"></script>
 </body>
 </html>
