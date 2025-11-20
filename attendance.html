@@ -157,20 +157,40 @@ const btnScheduleSave = document.getElementById("btn-schedule-save");
 const scheduleList = document.getElementById("schedule-list");
 
 // Menu chuyển trang
-document.querySelectorAll(".menu-item").forEach(i=>{
-  i.onclick = () => {
-    document.querySelectorAll(".menu-item").forEach(x=>x.classList.remove("active")); 
-    i.classList.add("active");
-    checkinPage.classList.add("hidden"); 
-    historyPage.classList.add("hidden");
-    schedulePage.classList.add("hidden");
 
-    if(i.dataset.page==="checkin") checkinPage.classList.remove("hidden");
-    if(i.dataset.page==="history") {historyPage.classList.remove("hidden"); loadHistory();}
-    if(i.dataset.page==="schedule") {schedulePage.classList.remove("hidden"); loadSchedule();}
-    sidebar.classList.remove("active"); overlay.classList.remove("active");
-  };
-});
+  // === XỬ LÝ MENU & ĐĂNG XUẤT (chỉ để 1 đoạn này thôi) ===
+document.querySelectorAll(".menu-item").forEach(item => {
+    item.addEventListener("click", function() {
+      const page = this.dataset.page;
+  
+      // Đăng xuất đặc biệt
+      if (this.id === "logoutBtn") {
+        auth.signOut().then(() => {
+          location.href = "index.html";
+        }).catch(err => alert("Lỗi đăng xuất: " + err.message));
+        return;
+      }
+  
+      // nếu là các trang khác thì mới chuyển
+      document.querySelectorAll(".menu-item").forEach(x => x.classList.remove("active"));
+      this.classList.add("active");
+  
+      // Ẩn hết các trang
+      checkinPage.classList.add("hidden");
+      historyPage.classList.add("hidden");
+      schedulePage.classList.add("hidden");
+  
+      // Hiện trang tương ứng
+      if (page === "checkin") checkinPage.classList.remove("hidden");
+      if (page === "history") { historyPage.classList.remove("hidden"); loadHistory(); }
+      if (page === "schedule") { schedulePage.classList.remove("hidden"); loadSchedule(); }
+  
+      // Đóng sidebar
+      sidebar.classList.remove("active");
+      overlay.classList.remove("active");
+    });
+  });
+
 
 // Lưu lịch làm
 btnScheduleSave.onclick = async () => {
