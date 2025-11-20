@@ -1,11 +1,12 @@
 // --- Firebase config ---
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyB3QQKW5kb9I3mZ4vr8lYcSBTEZZ1sAM8s",
+  authDomain: "hplabs-jobs.firebaseapp.com",
+  projectId: "hplabs-jobs",
+  storageBucket: "hplabs-jobs.firebasestorage.app",
+  messagingSenderId: "424963153110",
+  appId: "1:424963153110:web:cb380d3dff8d5582dafd77",
+  measurementId: "G-GGL0HW29KT"
 };
 
 // Initialize Firebase (compat)
